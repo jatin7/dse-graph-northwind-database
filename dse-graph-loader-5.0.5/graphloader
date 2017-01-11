@@ -1,0 +1,70 @@
+#!/bin/bash
+
+export VARS=${@:1}
+
+set echo off
+set -f
+
+if [ "x$LOADER_HOME" = "x" ]; then
+    LOADER_HOME="$(dirname $0)"
+fi
+
+. $LOADER_HOME/graphloader-env.sh
+
+# Use JAVA_HOME if set, otherwise look for java in PATH
+if [ -n "$JAVA_HOME" ]; then
+    # Why we can't have nice things: Solaris combines x86 and x86_64
+    # installations in the same tree, using an unconventional path for the
+    # 64bit JVM.  Since we prefer 64bit, search the alternate path first,
+    # (see https://issues.apache.org/jira/browse/CASSANDRA-4638).
+    for java in "$JAVA_HOME"/bin/amd64/java "$JAVA_HOME"/bin/java; do
+        if [ -x "$java" ]; then
+            JAVA="$java"
+            break
+        fi
+    done
+else
+    JAVA=java
+fi
+
+if [ -z $JAVA ] ; then
+    echo Unable to find java executable. Check JAVA_HOME and PATH environment variables. > /dev/stderr
+    exit 1;
+fi
+
+# Uncomment this to set the heap sizes
+#MAX_HEAP_SIZE="4G"
+#HEAP_NEWSIZE="800M"
+
+# only calculate the size if it's not set manually
+if [ "x$MAX_HEAP_SIZE" = "x" ] && [ "x$HEAP_NEWSIZE" = "x" ]; then
+    calculate_heap_sizes
+fi
+
+JVM_OPTS="$JVM_OPTS -Xms${MAX_HEAP_SIZE}"
+JVM_OPTS="$JVM_OPTS -Xmx${MAX_HEAP_SIZE}"
+
+# modify logger path and uncomment the below lines to enable the gc log
+#export JVM_OPTS="$JVM_OPTS -Xloggc:/path/to/loader.gclog"
+#export JVM_OPTS="$JVM_OPTS -XX:+PrintGCDateStamps"
+#export JVM_OPTS="$JVM_OPTS -XX:+PrintGCDetails"
+#export JVM_OPTS="$JVM_OPTS -XX:+PrintTenuringDistribution"
+#export JVM_OPTS="$JVM_OPTS -XX:+PrintGCApplicationStoppedTime"
+#export JVM_OPTS="$JVM_OPTS -XX:+PrintGCCause"
+
+# add home to the classpath
+export LOADER_CLASSPATH="$LOADER_CLASSPATH:$LOADER_HOME/*"
+
+# add additional jars to the classpath if the lib directory exists
+if [ -d "$LOADER_HOME"/lib ]; then
+  export LOADER_CLASSPATH="$LOADER_CLASSPATH:$LOADER_HOME/lib/*"
+fi
+
+export JVM_OPTS="$JVM_OPTS -cp $LOADER_CLASSPATH"
+
+# Uncomment to enable debugging
+#JVM_OPTS="$JVM_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=1414"
+
+echo "$JAVA" $JVM_OPTS com.datastax.dsegraphloader.cli.Executable $VARS
+
+exec "$JAVA" $JVM_OPTS com.datastax.dsegraphloader.cli.Executable $VARS

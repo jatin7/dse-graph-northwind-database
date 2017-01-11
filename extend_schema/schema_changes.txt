@@ -1,0 +1,15 @@
+schema.propertyKey("age").Int().single().ifNotExists().create()
+schema.propertyKey("confidence").Int().single().ifNotExists().create()
+schema.propertyKey("relationshipType").Text().single().ifNotExists().create()
+schema.propertyKey("affinityScore").Int().single().ifNotExists().create()
+schema.propertyKey("rating").Int().single().ifNotExists().create()
+
+schema.vertexLabel("facebookMember").properties("name", "age").ifNotExists().create()
+
+schema.edgeLabel("isMemberOf").single().properties("confidence").connection("customer", "facebookMember").ifNotExists().create()
+schema.edgeLabel("isRelatedTo").single().properties("relationshipType").connection("facebookMember", "facebookMember").ifNotExists().create()
+schema.edgeLabel("isFriendsWith").single().properties("affinityScore").connection("facebookMember", "facebookMember").ifNotExists().create()
+schema.edgeLabel("rated").single().properties("rating").connection("customer", "product").ifNotExists().create()
+
+schema.vertexLabel('facebookMember').index('byName').materialized().by('name').ifNotExists().add()
+

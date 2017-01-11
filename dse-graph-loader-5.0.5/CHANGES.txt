@@ -1,0 +1,60 @@
+* 5.0.5
+  - DGL-136 Check node workloads
+  - DGL-122 Include totals per type added on each report cycle
+  - DGL-123 Calculate Xmx and Xms values
+  - add/update neo4j sample script
+  - DGL-142 modify classpath so that it properly picks up wildcards for the lib/ directory
+  - DGL-139 Transformation is applied 2+ times
+  - DGL-134 Warn if nodes with unsupported DSE version
+  - DGL-133 Enable printing of DGL version
+* 5.0.3
+  - DGL-86 Handle SQL types properly
+  - DGL-110 Nested map not being used correctly
+  - DGL-128 Handle Multi-cardinality property for schema generation
+  - DGL-82 Do some basic checking for edge duplication on load
+  - DGL-125 Mini-prep
+  - DGL-54 Graph Loader Schema Retry Sometimes Causes Failures
+  - DGL-98 Split out configuration of loader threads into 2 phases (vertex creation and everything else)
+  - DGL-83 Allow transformation chaining on DataInput
+  - DGL-94 Guard Against Empty Transform Closure
+  - DGL-106 Provide map(), flatMap() and filter() for inputs
+  - DGL-84 Provide inV/outV overloads in IncidentEdgeImport
+  - DGL-117 Move mapping API to graph loader
+* 5.0.2
+  - DGL-109 An extension of DGL-93 due to lack of kerberos support
+  - DGL-113 Allow faults tests to be run in mvn test
+  - DGL-80 Let DSE Graph Loader take JSON with single quotes
+  - DGL-102 Bump Minor Version to 5.0.2
+  - DGL-101 Fix Path Resolution in DSE Graph Loader
+* 5.0.1
+  - DGL-93 DGL must support SSL to the extent of the Java driver
+  - DGL-89 Improve error messages
+* 5.0.0
+  - DGL-78 Vertices with custom ids are not created
+  - DGL-55 graphloader does not like DSEG ids in gryo files
+  - DGL-75 Script used to run loader is too broad when pulling in classpath dependencies
+  - DGL-72 ConcurrentModificationException with more than one loader thread
+  - DGL-71 Upserts don't appear to update existing vertices
+  - DGL-70 Set 'external_vertex_verify' false in driver connection for DseGraphDriver	
+  - DGL-62 Record latencies in Graph Loader
+    DGL-67 Adding a license file.
+  - DSP-9334 TinkerGraph looses list-cardinality properties
+  - DSP-8782 Add test profiles for DSE Graph Loader
+  - DSP-9823 -load_new = false creates extraneous vertices
+  - DSP-9736 Graph loader does not recognize all indexes
+  - DSP-9692 EAPv Graph Loader does not allow empty fields for timestamp import
+  - DSP-9779 Add password authentication to the loader
+  - DSP-9746 vertex_complete option is confusing
+  - DSP-9588 Graph Loader: UID Fields do not uniquely Identify the Vertex
+  - DSP-9724 Synchronize naming of DSE Graph Loader
+  - DSP-9215 Alternate source locations for the graph loader
+  - DSP-9109 Implement Graph Input for Neo4j	
+  - DSP-9350 graphloader should fail faster and more robustly on edge specification errors
+  - DSP-9356 When Graph Data Loader encounters an error processing a file, spit the line of the file for easier debugging.
+  - DSP-9358 Graph loader fails on empty fields with File.text
+  - DSP-9367 Race Condition with Reporter
+  - DSP-9336 Graphloader doesn't work with "::" delimeter
+  - DSP-9077 Graph Loader writes too many logs
+  - DSP-9335 Graph loader hangs when loading data
+  - DSP-9330 Graph loader script won't run under dash shell (ubuntu default for sh)
+  - DSP-9217 Add graph loader tests for graphml and graphson

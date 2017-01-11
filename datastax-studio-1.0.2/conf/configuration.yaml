@@ -1,0 +1,72 @@
+# Maximum number of items returned per cell execution. Additional items will be truncated.
+# Unit: count / number of items
+resultSizeLimit: 1000
+
+# Maximum size of a cell result. If a cell result exceeds this size then the cell execution will fail.
+# Unit: bytes
+maxResultSizeBytes: 10485760
+
+# Cell execution timeout. A value of 0 indicates no timeout and will depend on the DSE server timeouts configured in dse.yaml.
+# Unit: miliseconds
+executionTimeoutMs: 0
+
+# Schema refresh polling interval.
+# Unit: miliseconds
+schemaRefreshIntervalMs: 3000
+
+# TraversalSource mapping for real-time and analytic execution engines. These values correspond to the traversal sources
+# configured in dse.yaml.
+# Unit: string
+traversalSources:
+  realTimeTraversalSource: g
+  analyticTraversalSource: a
+
+# This refers to the datastax-studio server
+server:
+ httpPort: 9091
+ httpBindAddress: localhost
+
+logging:
+ fileName: studio.log
+ maxLogFileSize: 250 MB
+ maxFiles: 10
+ directory: ./logs
+
+security:
+#To make encryption of passwords more unique for your installation, you can change
+#the password in this file.  But you should ensure it is a reasonably strong generated
+#password, and not just a word or phrase
+  encryptionPasswordFile: conf/security/security.properties
+
+# User data being, where we store data specific to a user
+# in the application.  For the short-term this is the file system, which
+# is why we need to explicitly configure a location
+userData:
+  #defaults to a .datastax_studio folder in your home directory, such as  ~/.datastax_studio
+  #set to a non-null value to override
+  baseDirectory: null
+  connectionsDirectory: connections
+  notebooksDirectory: notebooks
+
+connectionManagement:
+  #how long before we expire/close a connection that isn't in use.
+  #Defaulting to 1 hour
+  idleTimeoutInSeconds: 3600
+
+# IDE(integrated development environment) services are deployed
+# as a service alongside datastax-studio.  Some configuration parameters
+# here need to reflect what http port datastax-studio is listening on
+# to provide connection configuration and editor contents to the IDE services.
+# E.g. If server.httpPort = 10000, then connectionServicePort and fileServicePort should also be 10000
+ide:
+  #connection related config
+  connectionServicePort: 9091
+  connectionCacheIdleTimeInSeconds: 3600
+  connectionConfigMonitorFrequencyInSeconds: 120
+  #file/editor content loading related config
+  fileServicePort: 9091
+  fileContentsJsonField: code
+  #How long content assist will cache known schema
+  #IMPORTANT:  Refreshing the known schema incurs a transaction in DSE Graph, and
+  #should never be set to 0 other than pure developer environments
+  graphSchemaCacheIdleTimeInSeconds: 600

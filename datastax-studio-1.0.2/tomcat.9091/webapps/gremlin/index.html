@@ -1,0 +1,64 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Language" content="en-us">
+	<title>Example Web Editor</title>
+	<link rel="stylesheet" type="text/css" href="xtext/2.9.1/xtext-ace.css"/>
+	<link rel="stylesheet" type="text/css" href="style.css"/>
+	<script src="webjars/requirejs/2.1.20/require.min.js"></script>
+	<script type="text/javascript">
+		var baseUrl = window.location.pathname;
+		var fileIndex = baseUrl.indexOf("index.html");
+		if (fileIndex > 0)
+			baseUrl = baseUrl.slice(0, fileIndex);
+		require.config({
+			baseUrl: baseUrl,
+			paths: {
+				"jquery": "webjars/jquery/2.1.4/jquery.min",
+				"ace/ext/language_tools": "webjars/ace/1.2.0/src/ext-language_tools",
+				"xtext/xtext-ace": "xtext/2.9.1/xtext-ace"
+			}
+		});
+		require(["webjars/ace/1.2.0/src/ace"], function() {
+			require(["xtext/xtext-ace"], function(xtext) {
+				
+				var editors = xtext.createEditor({
+				    parent: null,
+					loadFromServer: false,
+                    baseUrl: baseUrl,
+                    position: "absolute",
+					syntaxDefinition: "xtext-resources/generated/mode-gremlin"
+                });
+                topEditor = editors[0];
+                bottomEditor = editors[1];
+                                
+                topEditor.xtextServices.editorContext.addServerStateListener(function(params) {
+					if (!params.forceUpdate){
+						bottomEditor.xtextServices.update({forceUpdate: true});
+					}
+                });
+			});
+		});
+	</script>
+</head>
+<body>
+
+
+<div class="container-top">
+    <div class="xtext-editor" 
+	data-editor-content-type="gremlin" 
+	data-editor-xtext-lang="gremlin" 
+    data-editor-load-from-server="false"
+	data-editor-resource-id="api/v1/connections/8ed8c870-7622-431f-97a7-c0336ffde016,,a1f389c5-fdc2-4c03-a281-453b19d496db,0,api/v1/notebooks/a1f389c5-fdc2-4c03-a281-453b19d496db/cells/b77eb51e-dda4-49b6-bb2c-411fd5c2878b.gremlin"/>
+</div>
+
+<div class="container-bottom">
+    <div class="xtext-editor 
+	data-editor-content-type="gremlin" 
+	data-editor-xtext-lang="gremlin" 
+    data-editor-load-from-server="false"
+	data-editor-resource-id="api/v1/connections/8ed8c870-7622-431f-97a7-c0336ffde016,,a1f389c5-fdc2-4c03-a281-453b19d496db,1,api/v1/notebooks/a1f389c5-fdc2-4c03-a281-453b19d496db/cells/78abc2f3-3ef7-4fba-9505-016da29340c8.gremlin"/>
+</div>
+
+</body>
+</html>

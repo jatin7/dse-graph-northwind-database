@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "x$LOADER_HOME" = "x" ]; then
+    LOADER_HOME="`pwd`"
+fi
+
+# retrieve the neo4j dependencies from maven that may be used in conjunction with the loader
+# these are AGPL licensed and can't be distributed with the loader.
+
+export VERSION=0.4-3.0.3
+export M2REPO=~/.m2/repository
+
+mvn org.apache.maven.plugins:maven-dependency-plugin:2.7:get -DgroupId=org.neo4j -DartifactId=neo4j-tinkerpop-api-impl -Dversion=$VERSION -Dtype=pom
+
+mvn org.apache.maven.plugins:maven-dependency-plugin:2.7:copy-dependencies -f $M2REPO/org/neo4j/neo4j-tinkerpop-api-impl/$VERSION/neo4j-tinkerpop-api-impl-$VERSION.pom -DoutputDirectory=$LOADER_HOME/lib
+
+cp "$M2REPO/org/neo4j/neo4j-tinkerpop-api-impl/$VERSION/neo4j-tinkerpop-api-impl-$VERSION.jar" $LOADER_HOME/lib

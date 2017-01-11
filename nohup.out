@@ -1,0 +1,53 @@
+Cannot start Studio on port 9091: java.net.BindException: Address already in use
+Cannot start Studio on port 9091: java.net.BindException: Address already in use
+10:58:29.602 [main] INFO  org.apache.coyote.http11.Http11NioProtocol ID:  TS: - Initializing ProtocolHandler ["http-nio-127.0.0.1-9091"]
+10:58:29.619 [main] INFO  org.apache.tomcat.util.net.NioSelectorPool ID:  TS: - Using a shared selector for servlet write/read
+10:58:29.622 [main] INFO  org.apache.catalina.core.StandardService ID:  TS: - Starting service Tomcat
+10:58:29.622 [main] INFO  org.apache.catalina.core.StandardEngine ID:  TS: - Starting Servlet Engine: Apache Tomcat/8.0.23
+10:58:29.714 [localhost-startStop-1] INFO  org.apache.catalina.startup.ContextConfig ID:  TS: - No global web.xml found
+10:58:30.037 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner ID:  TS: - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10:58:32.078 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner ID:  TS: - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+ERROR StatusLogger No Log4j context configuration provided. This is very unusual.
+10:58:35.344 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner ID:  TS: - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+10:58:35.378 [localhost-startStop-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] ID:  TS: - Spring WebApplicationInitializers detected on classpath: [org.glassfish.jersey.server.spring.SpringWebApplicationInitializer@2700d489]
+10:58:35.557 [localhost-startStop-1] INFO  org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/api] ID:  TS: - Initializing Spring root WebApplicationContext
+10:58:35.562 [localhost-startStop-1] INFO  org.springframework.web.context.ContextLoader ID:  TS: - Root WebApplicationContext: initialization started
+10:58:35.627 [localhost-startStop-1] INFO  org.springframework.web.context.support.XmlWebApplicationContext ID:  TS: - Refreshing Root WebApplicationContext: startup date [Tue Jan 10 10:58:35 GMT 2017]; root of context hierarchy
+10:58:35.656 [localhost-startStop-1] INFO  org.springframework.beans.factory.xml.XmlBeanDefinitionReader ID:  TS: - Loading XML bean definitions from class path resource [applicationContext.xml]
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/u02/dev/dse_dev/dse-graph-Northwind-loader/datastax-studio-1.0.2/lib/log4j-slf4j-impl-2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/u02/dev/dse_dev/dse-graph-Northwind-loader/datastax-studio-1.0.2/tomcat.9091/webapps/api/WEB-INF/lib/log4j-slf4j-impl-2.3.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.apache.logging.slf4j.Log4jLoggerFactory]
+10:58:36.187 [localhost-startStop-1] INFO  org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor ID:  TS: - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+10:58:36.221 [localhost-startStop-1] INFO  org.springframework.context.support.PostProcessorRegistrationDelegate$BeanPostProcessorChecker ID:  TS: - Bean 'org.springframework.scheduling.annotation.ProxyAsyncConfiguration' of type [class org.springframework.scheduling.annotation.ProxyAsyncConfiguration$$EnhancerBySpringCGLIB$$89b09deb] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+10:58:36.881 [localhost-startStop-1] INFO  org.springframework.web.context.ContextLoader ID:  TS: - Root WebApplicationContext: initialization completed in 1318 ms
+Jan 10, 2017 10:58:37 AM org.glassfish.jersey.server.ApplicationHandler initialize
+INFO: Initiating Jersey application, version Jersey: 2.9 2014-05-22 05:12:10...
+10:58:37.503 [main] INFO  org.apache.coyote.http11.Http11NioProtocol ID:  TS: - Starting ProtocolHandler ["http-nio-127.0.0.1-9091"]
+
+Studio is now running at: http://localhost:9091
+
+Jan 10, 2017 10:58:38 AM org.hibernate.validator.internal.util.Version <clinit>
+INFO: HV000001: Hibernate Validator 5.0.0.Final
+10:58:53.353 [scheduled-executor-0] INFO  com.datastax.driver.core.NettyUtil ID:  TS: - Found Netty's native epoll transport in the classpath, using it
+10:58:54.099 [scheduled-executor-0] INFO  com.datastax.driver.core.policies.DCAwareRoundRobinPolicy ID:  TS: - Using data-center name 'SearchGraphAnalytics' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+10:58:54.104 [scheduled-executor-0] INFO  com.datastax.driver.core.Cluster ID:  TS: - New Cassandra host /127.0.0.1:9042 added
+10:58:54.816 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.Connection ID:  TS: - Created new connection for ws://localhost:8182/gremlin
+10:58:54.816 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Opening connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+10:58:55.021 [http-nio-127.0.0.1-9091-exec-5] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID: e3d44de4-f151-4186-b8ed-45f8f3447293 TS: 1484045932632- Signalled closing of connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+10:58:56.978 [scheduled-executor-1] INFO  com.datastax.driver.core.policies.DCAwareRoundRobinPolicy ID:  TS: - Using data-center name 'SearchGraphAnalytics' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+10:58:56.979 [scheduled-executor-1] INFO  com.datastax.driver.core.Cluster ID:  TS: - New Cassandra host /127.0.0.1:9042 added
+10:58:57.015 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.Connection ID:  TS: - Created new connection for ws://localhost:8182/gremlin
+10:58:57.016 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Opening connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+13:20:15.125 [scheduled-executor-3] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Signalled closing of connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+13:29:02.905 [scheduled-executor-1] INFO  com.datastax.driver.core.policies.DCAwareRoundRobinPolicy ID:  TS: - Using data-center name 'SearchGraphAnalytics' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+13:29:02.906 [scheduled-executor-1] INFO  com.datastax.driver.core.Cluster ID:  TS: - New Cassandra host /127.0.0.1:9042 added
+13:29:02.977 [scheduled-executor-3] INFO  org.apache.tinkerpop.gremlin.driver.Connection ID:  TS: - Created new connection for ws://localhost:8182/gremlin
+13:29:02.977 [scheduled-executor-3] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Opening connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+14:27:37.596 [scheduled-executor-2] INFO  com.datastax.driver.core.policies.DCAwareRoundRobinPolicy ID:  TS: - Using data-center name 'SearchGraphAnalytics' for DCAwareRoundRobinPolicy (if this is incorrect, please provide the correct datacenter name with DCAwareRoundRobinPolicy constructor)
+14:27:37.597 [scheduled-executor-2] INFO  com.datastax.driver.core.Cluster ID:  TS: - New Cassandra host /127.0.0.1:9042 added
+14:27:37.635 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.Connection ID:  TS: - Created new connection for ws://localhost:8182/gremlin
+14:27:37.635 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Opening connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+14:27:37.657 [http-nio-127.0.0.1-9091-exec-5] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID: db15f29d-b69e-465b-8017-333b53cb8a8c TS: 1484058457492- Signalled closing of connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
+15:59:27.933 [scheduled-executor-0] INFO  org.apache.tinkerpop.gremlin.driver.ConnectionPool ID:  TS: - Signalled closing of connection pool on Host{address=localhost/127.0.0.1:8182, hostUri=ws://localhost:8182/gremlin} with core size of 1
