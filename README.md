@@ -137,6 +137,9 @@ schema.vertexLabel('facebookMember').index('byName').materialized().by('name').i
 ```
 
 ##Check (or re-create) the csv files
+These are a set of utility scripts to generate random data created by one of the DataStax Graph experts, Alice Lottini. 
+
+There are already files generated that you can use:
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
@@ -144,7 +147,9 @@ $ ls
 facebookMembers.csv  identityEdges_cf2b.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
 
-##Create the facebook identity and relationship data loader script
+##Create the Facebook identity and relationship data loader script
+We need a new Groovy script for the loader for this new data.
+
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
@@ -207,6 +212,8 @@ load(ratedInput).asEdges {
 ```
 
 ##Load the Facebook identity and relationship data
+Run the loader using the Groovy script we just created for the new data.
+
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
@@ -226,6 +233,8 @@ $ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -a
 ```
 
 ##Create the Customer <-> Facebook edge data loader script
+We need a new Groovy script for the loader for this additional data.
+
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
@@ -254,6 +263,8 @@ load(isMemberOfInput).asEdges {
 ```
 
 ##Load the Customer <-> Facebook edge data
+Run the loader using the Groovy script we just created for the additional data.
+
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
@@ -271,7 +282,7 @@ $ $LOADER_HOME/graphloader ./supplemental_fb_edges_mapping.groovy -graph testGRY
 2017-01-10 14:25:44 INFO  Reporter:99 - 255 total elements written
 ```
 
-#Run Some queries in Studio:
+#Run some queries in Studio:
 
 (if you need it)
 ```
