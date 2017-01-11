@@ -169,7 +169,8 @@ load(ratedInput).asEdges {
 }
 ```
 
-9.Load the data
+9. Load the data
+
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
