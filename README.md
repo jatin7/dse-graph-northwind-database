@@ -290,9 +290,10 @@ Everybody in London with an associated Facebook ID with a confidence level great
 g.V().hasLabel('customer').has('city','London').as("customer").outE('isMemberOf').has('confidence',gt(60)).as("confidence").inV().as("friend")
     .select("customer", "confidence", "friend").by("name").by("confidence").by("name")
 ```
-Another query:
+Another query - ordered group by:
 ```
 gremlin> g.V().hasLabel("product").groupCount().by("unitPrice").order(local).by(keys, decr)
+
 ==>{263.5=1, 123.79=1, 97.0=1, 81.0=1, 62.5=1, 55.0=1, 53.0=1, 49.3=1, 46.0=1, 45.6=1, 43.9=2, 40.0=1, 39.0=1, 38.0=2, 36.0=1, 34.8=1, 34.0=1, 33.25=1, 32.8=1, 32.0=1, 31.23=1, 31.0=1, 30.0=1, 28.5=1, 26.0=1, 25.89=1, 25.0=1, 24.0=1, 23.25=1, 22.0=1, 21.5=1, 21.35=1, 21.05=1, 21.0=2, 20.0=1, 19.5=1, 19.45=1, 19.0=2, 18.4=1, 18.0=4, 17.45=1, 17.0=1, 16.25=1, 15.5=1, 15.0=2, 14.0=4, 13.25=1, 13.0=1, 12.75=1, 12.5=2, 12.0=1, 10.0=3, 9.65=1, 9.5=2, 9.2=1, 9.0=1, 7.75=1, 7.45=1, 7.0=1, 6.0=1, 4.5=1, 2.5=1}
 ```
 
