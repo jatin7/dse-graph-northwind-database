@@ -1,6 +1,0 @@
-id,name,createdAt,yav
-1,james,2014-01-01T00:00:00.00Z,yav1
-2,john,2014-01-01T00:00:00.00Z,yav2
-3,simon,null,yav3
-4,simon,,yav3
-5,simon,NULL,yav3
