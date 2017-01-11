@@ -113,7 +113,6 @@ Our objective is to extend the Northwind schema and load some data into the data
   <img src="Northwind-extended.png"/>
 </p>
 
-
 ##Schema changes to support the new data
 This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
 
@@ -145,7 +144,7 @@ $ ls
 facebookMembers.csv  identityEdges_cf2b.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
 
-#Create the facebook identity and relationship data loader script
+##Create the facebook identity and relationship data loader script
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
@@ -207,7 +206,7 @@ load(ratedInput).asEdges {
 }
 ```
 
-#Load the Facebook identity and relationship data
+##Load the Facebook identity and relationship data
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
@@ -226,7 +225,7 @@ $ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -a
 2017-01-10 14:15:10 INFO  Reporter:99 - 912 total elements written
 ```
 
-#Create the Customer <-> Facebook edge data loader script
+##Create the Customer <-> Facebook edge data loader script
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
@@ -254,7 +253,7 @@ load(isMemberOfInput).asEdges {
 }
 ```
 
-#Load the Customer <-> Facebook edge data
+##Load the Customer <-> Facebook edge data
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
