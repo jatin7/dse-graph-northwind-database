@@ -1,19 +1,18 @@
 # dse-graph-NorthWind-database - work in progress...
 
-1. Setup DSE
-------------
+#Setup DSE
+
 upgrade to 5.0.5
 download loader and studio (or install dse-demos package)
 
 start Studio 
 nohup ./datastax-studio-1.0.2/bin/server.sh &
 
-2. Get Data
------------
+#Get Data
+
 Download the Northwind database data file from https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
 
-3. Create a mapping file
-----------------------
+#Create a mapping file
 
 Create northwind-mapping.groovy:
 ```
@@ -44,8 +43,7 @@ load(source.edges()).asEdges {
     }
 }
 ```
-4. Load The Data
-----------------
+#Load The Data
 
 Delete an old one if there is one:
 ```
@@ -65,8 +63,7 @@ cd /home/dse/dse_dev/dse-graph-Northwind-loader
 2017-01-10 13:36:22 INFO  Reporter:99 - 23940 total elements written
 ```
 
-5. Create Notebook
-------------------
+#Create Notebook
 
 create a new notebook - Northwind, testGRYO database
 test its all in there:
@@ -80,7 +77,7 @@ e.g. g.V().hasLabel("category").valueMap("name", "description")
 also refer to https://github.com/dkuppitz/sql2gremlin
 
 
-6. Extend The Schema - don't do this - the groovy loader will do it with "create_schema: true"
+#Extend The Schema - don't do this - the groovy loader will do it with "create_schema: true"
 
 https://drive.google.com/drive/folders/0B2W8ihBXvBeJUXJualFYZU1MSDQ
 
@@ -102,7 +99,7 @@ schema.edgeLabel("rated").single().properties("rating").connection("customer", "
 schema.vertexLabel('facebookMember').index('byName').materialized().by('name').ifNotExists().add()
 ```
 
-7. Check (or re-create) the csv files
+#Check (or re-create) the csv files
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
@@ -110,7 +107,7 @@ $ ls
 facebookMembers.csv  identityEdges_cf2b.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
 
-8. Create the loader script
+#Create the loader script
 ```
 $ cat supplemental_data_mapping.groovy
 config create_schema: true, load_new: false
@@ -169,7 +166,7 @@ load(ratedInput).asEdges {
 }
 ```
 
-9. Load the data
+#Load the data
 
 ```
 $ pwd
@@ -187,7 +184,7 @@ $ ../../dse-graph-loader-5.0.5/graphloader ./supplemental_data_mapping.groovy -g
 2017-01-10 14:15:10 INFO  Reporter:99 - 912 total elements written
 ```
 
-10. Load the Custmoer <-> Facebook edges
+#Load the Custmoer <-> Facebook edges
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
@@ -203,7 +200,7 @@ $ ../../dse-graph-loader-5.0.5/graphloader ./supplemental_fb_edges_mapping.groov
 2017-01-10 14:25:44 INFO  Reporter:99 - 255 total elements written
 ```
 
-11. Run Some queries in Studio:
+#Run Some queries in Studio:
 
 (if you need it)
 ```
