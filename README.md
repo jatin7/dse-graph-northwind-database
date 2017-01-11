@@ -81,7 +81,7 @@ gremlin> schema.clear()
 ```
 
 
-load data - create graph called testGRYO - change -dryrun to false when ready to load:
+Load data - create graph called testGRYO - change -dryrun to false when ready to load:
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 cd /home/dse/dse_dev/dse-graph-Northwind-loader
@@ -94,8 +94,8 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 
 #Create Notebook
 
-create a new notebook - Northwind, testGRYO database
-test its all in there:
+Create a new notebook - call it Northwind, connect to the testGRYO graph database
+Test its all in there:
 ```
 g.V().count() = 3209
 ```
@@ -107,12 +107,17 @@ also refer to https://github.com/dkuppitz/sql2gremlin
 
 
 #Extend The Schema
-Our pobjective is to extend the Northwind schema and load some data into the database. We will add an entity describing a Facebook account and relate that to the customer entity.
+Our objective is to extend the Northwind schema and load some data into the database. We will add an entity describing a Facebook account and relate that to the customer entity.
+
+<p align="left">
+  <img src="Northwind-extended.png"/>
+</p>
+
 
 ##Schema changes to support the new data
 This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
 
-These are the lines that you could run to extend the schema manually. However we will let our Groovy script create the schema dynamically when it loads the data.
+These are the lines of Gremlin that you could run in the console to extend the schema manually. However we will let DSE Graph loader use our Groovy script to create the schema dynamically when it loads the data.
 
 Reference only!
 ```
