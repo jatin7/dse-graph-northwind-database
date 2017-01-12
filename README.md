@@ -1,6 +1,9 @@
 # dse-graph-NorthWind-database
 
-Learn to use DataStax Enterprise (DSE) Graph - load the Northwind database into DSE Graph, look at the data in DSE Studio, then modify the schema and load additional data.
+Learn to use DataStax Enterprise (DSE) Graph:
+- load the Northwind database into DSE Graph
+- Explore the data in DSE Studio using the Gremlin graph traversal language
+- Modify the graph database schema and load additional data.
 
 #Pre-requisites
 
