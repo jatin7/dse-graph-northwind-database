@@ -165,6 +165,7 @@ load(source.edges()).asEdges {
 >You'll need this if you're re-running this exercise
 
 Delete an old graph you created (if there is one):
+
 In the Gremlin console (```dse gremlin-console```) or in DSE Studio:
 ```
 gremlin> :remote config alias g testGRYO.g
@@ -189,11 +190,12 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 #Create a new notebook in DSE Studio for your graph
 
 Create a new notebook - call it Northwind, connect to the testGRYO graph database
+
 Test its all in there:
 ```
 g.V().count() = 3209
 ```
-sample queries on the data:
+
 You can find sample reference queries here: http://sql2gremlin.com/
 
 e.g. ```g.V().hasLabel("category").valueMap("name", "description")```
