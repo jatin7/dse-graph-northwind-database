@@ -271,9 +271,9 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
 
 
 #Extend The Schema
--Our next objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
--The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
--We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
+- Our next objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
+- The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
+- We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
 
 <p align="left">
   <img src="Northwind-extended.png"/>
