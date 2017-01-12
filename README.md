@@ -5,6 +5,12 @@ Learn to use DataStax Enterprise (DSE) Graph:
 - Explore the data in DSE Studio using the Gremlin graph traversal language
 - Modify the graph database schema and load additional data.
 
+Look at your data in a different way.
+
+<p align="left">
+  <img src="Northwind-graph.png"/>
+</p>
+
 #Pre-requisites
 
 ##Training
