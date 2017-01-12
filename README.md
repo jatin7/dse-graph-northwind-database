@@ -237,6 +237,24 @@ g.V().hasLabel('customer').has('city','London')
 
 You can find sample Gremlin reference queries for this data model here: http://sql2gremlin.com/
 
+Have a play with the features. View the raw data:
+<p align="left">
+  <img src="Northwind-graph-table.png"/>
+</p>
+View it as a graph:
+<p align="left">
+  <img src="Northwind-graph-plot.png"/>
+</p>
+Refine the search and zoom in:
+<p align="left">
+  <img src="Northwind-graph-plot2.png"/>
+</p>
+Trivial example but you get the idea:
+<p align="left">
+  <img src="Northwind-graph-bar.png"/>
+</p>
+
+
 For example:
 ```
 gremlin> g.V().hasLabel("category").values("name")
