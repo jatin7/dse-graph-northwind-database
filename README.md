@@ -1,25 +1,28 @@
 # dse-graph-NorthWind-database
 
 Learn to use DataStax Enterprise (DSE) Graph:
-- load the Northwind database into DSE Graph
+- Load the Northwind database into DSE Graph
 - Explore the data in DSE Studio using the Gremlin graph traversal language
 - Modify the graph database schema and load additional data.
 
 #Pre-requisites
 
-Ideally you should take a look at the Gremlin language and the DataStax free training material at academy.datastax.com. 
+Ideally you should first investigate the Gremlin language and the DataStax free training material at academy.datastax.com. 
+
 In particular:
-- introduction to DataStax distributed database, analytics and search: https://academy.datastax.com/courses/
-- for some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
+- Introduction to the DataStax platform - Data, Analystics, Search and Graph: https://academy.datastax.com/courses/
+- For some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
 
 
 ##Install or upgrade to DSE 5.0.5
 You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance,
+
+For the purpose of this exercise let's assume you're installing on a single node.
 - Install Java 8 and Python 2.7+
 - Set up and install DataStax Enterprise with Spark and Solr enabled - this demo is based upon DSE 5.0.5 with Spark 1.6.2 and Scala 2.10, using the packaged install method:
  - Ubuntu/Debian - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installDEBdse.html
  - Red Hat/Fedora/CentOS/Oracle Linux - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installRHELdse.html
-- Note down the IP's of the node(s)
+- Note down the IP's of the node you're installing on
 
 To setup your environment, you'll also need the following resources:
 - Python 2.7
@@ -47,7 +50,7 @@ https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/ana/ana
 
 If you havent yet started DSE on this node you can skip to the section "Clone the RTFAP2 repository"
 
-If you **have** already started the DSE service on this node, follow the instructions below to remove the default (Cassandra-only) database:
+If you **have** already started the DSE service on this node, follow the instructions below to remove the default (Cassandra-only) database and start again in Search/Analytics/Graph mode:
 
 1. Stop the service.
 <pre>
@@ -55,13 +58,18 @@ $ sudo service dse stop
 Stopping DSE daemon : dse                                  [  OK  ]
 </pre>
 
-2. Enable Solr and Spark
-Change the flag from "0" to "1" for Solr and Spark in /etc/default/dse:
+2. Enable Solr, Spark and Graph
+
+> You'll need about 8GB in your machine or VM to run the full suite.
+
+Change the flag from "0" to "1" for Solr, Spark and Graph in /etc/default/dse:
 <pre>
 $ sudo vi /etc/default/dse
 </pre>
 e.g.:
 <pre>
+# Enable the DSE Graph service on this node
+GRAPH_ENABLED=1
 # Start the node in DSE Search mode
 SOLR_ENABLED=1
 # Start the node in Spark mode
@@ -237,7 +245,6 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
 <p align="left">
   <img src="Northwind-extended.png"/>
 </p>
-
 ##Schema changes to support the new data
 This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
 
