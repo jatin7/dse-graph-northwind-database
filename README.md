@@ -322,7 +322,7 @@ You'll need to edit the inputpath to reflect your environment. Do not forget the
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
 
-$ vi supplemental_data_mapping.groovy
+$ vi supplemental_fb_data_mapping.groovy
 
 config create_schema: true, load_new: false
 
@@ -388,7 +388,7 @@ LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
 
-$ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -address localhost -dryrun false
+$ $LOADER_HOME/graphloader ./supplemental_fb_data_mapping.groovy -graph testGRYO -address localhost -dryrun false
 ```
 You should see this output:
 ```
