@@ -13,7 +13,7 @@ In particular:
 ##Install or upgrade to DSE 5.0.5
 You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance,
 - Install Java 8 and Python 2.7+
-- Set up and install DataStax Enterprise with Spark and Solr enabled - this demo is based upon DSE 5.0.3.x with Spark 1.6.1 and Scala 2.10, using the packaged install method:
+- Set up and install DataStax Enterprise with Spark and Solr enabled - this demo is based upon DSE 5.0.5 with Spark 1.6.2 and Scala 2.10, using the packaged install method:
  - Ubuntu/Debian - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installDEBdse.html
  - Red Hat/Fedora/CentOS/Oracle Linux - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installRHELdse.html
 - Note down the IP's of the node(s)
