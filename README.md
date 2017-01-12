@@ -85,12 +85,13 @@ $ sudo service dse start
 </pre>
 <br>
 
-##Clone the RTFAP2 repository
+##Clone the dse-graph-NorthWind-database repository
 
 Finally, clone this repo to a directory on the machine where you installed DSE:
 ```
 $ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
 ```
+
 
 ##Start DSE Studio
 Use this URL for links to the documentation and download for DSE Studio: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/QuickStartStudio.html?hl=studio
@@ -174,7 +175,11 @@ gremlin> schema.clear()
 ```
 
 
-Load data - create graph called testGRYO - change -dryrun to false when ready to load:
+##Load the Northwind data
+
+Create a graph called testGRYO
+
+>You can change -dryrun to false when ready to load (no data is loaded when you set it to true):
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
@@ -193,20 +198,37 @@ Create a new notebook - call it Northwind, connect to the testGRYO graph databas
 
 Test its all in there:
 ```
-g.V().count() = 3209
+g.V().count()
+```
+You should see 3209
+
+You should be able to find every customer who lives in London
+```
+g.V().hasLabel('customer').has('city','London')
 ```
 
-You can find sample reference queries here: http://sql2gremlin.com/
+You can find sample Gremlin reference queries for this data model here: http://sql2gremlin.com/
 
-e.g. ```g.V().hasLabel("category").valueMap("name", "description")```
+For example:
+```
+gremlin> g.V().hasLabel("category").values("name")
+==>Beverages
+==>Condiments
+==>Confections
+==>Dairy Products
+==>Grains/Cereals
+==>Meat/Poultry
+==>Produce
+==>Seafood
+```
 
 Also refer to https://github.com/dkuppitz/sql2gremlin
 
 
 #Extend The Schema
-Our objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
-The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
-We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
+-Our objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
+-The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
+-We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
 
 <p align="left">
   <img src="Northwind-extended.png"/>
