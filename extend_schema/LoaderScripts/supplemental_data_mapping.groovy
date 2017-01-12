@@ -10,18 +10,30 @@ def ratedInput = File.csv(inputpath + 'rated.csv').delimiter('|')
 
 //Specifies what data source to load using which mapper
 load(fbMembersInput).asVertices {
-    label "facebookMember"
+    label "networkMember"
     key "name"
+}
+
+load(identitiesInput).asEdges {
+    label 'isMember'
+    outV 'name', {
+        label 'customer'
+        key 'name'
+    }
+    inV 'name', {
+        label 'networkMember'
+        key 'name'
+    }
 }
 
 load(isFriendsWithInput).asEdges {
     label "isFriendsWith"
     outV "nameFrom", {
-        label "facebookMember"
+        label "networkMember"
         key "name"
     }
     inV "nameTo", {
-        label "facebookMember"
+        label "networkMember"
         key "name"
     }
 }
@@ -29,11 +41,11 @@ load(isFriendsWithInput).asEdges {
 load(isRelatedToInput).asEdges {
     label "isRelatedTo"
     outV "nameFrom", {
-        label "facebookMember"
+        label "networkMember"
         key "name"
     }
     inV "nameTo", {
-        label "facebookMember"
+        label "networkMember"
         key "name"
     }
 }
@@ -49,5 +61,6 @@ load(ratedInput).asEdges {
         key "id"
     }
 
-
 }
+
+
