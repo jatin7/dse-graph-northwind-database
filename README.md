@@ -140,7 +140,7 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 ```
 
 
-#Get Data
+#Get The Northwind data
 There is some reference documentation on Kryo data imports here: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
 Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
@@ -184,7 +184,7 @@ load(source.edges()).asEdges {
     }
 }
 ```
-#Load The Data
+#Load The Northwind Data
 
 ##Pre-flights - re-run clean-up
 
@@ -273,7 +273,7 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
 #Extend The Schema
 - Our next objective is to extend the Northwind schema that we previously created and loaded data into. We'll define some new vertices and edges, and load some data into the database to populate those new elements. 
 - The data that we will add is an entity describing a FacebookMember account with an edge relationship shared with the Customer entity, and a new edge between Customer and Product call "rated".
-- We can also break the link between Customer and C, replacing it with a new property on the Customer, called "country". This will prevent the Country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
+- We can also break the link between Customer and Country, replacing it with a new property on the Customer vertex called "country". This will prevent the Country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
 
 <p align="left">
   <img src="Northwind-extended.png"/>
@@ -283,7 +283,7 @@ No actions here. This is for reference only - don't load these statements!!! - t
 
 These are the lines of Gremlin that you could run in the console to extend the schema manually. However we will let DSE Graph loader use our Groovy script to create the schema dynamically when it loads the data.
 
-Reference only!
+Reference only!!!
 ```
 schema.propertyKey("age").Int().single().ifNotExists().create()
 schema.propertyKey("confidence").Int().single().ifNotExists().create()
