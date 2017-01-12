@@ -271,15 +271,15 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
 
 
 #Extend The Schema
-- Our next objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
-- The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
-- We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
+- Our next objective is to extend the Northwind schema that we previously created and loaded data into. We'll define some new vertices and edges, and load some data into the database to populate those new elements. 
+- The data that we will add is an entity describing a FacebookMember account with an edge relationship shared with the Customer entity, and a new edge between Customer and Product call "rated".
+- We can also break the link between Customer and C, replacing it with a new property on the Customer, called "country". This will prevent the Country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
 
 <p align="left">
   <img src="Northwind-extended.png"/>
 </p>
 ##Schema changes to support the new data
-No actions here. This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
+No actions here. This is for reference only - don't load these statements!!! - the groovy loader will do it with "create_schema: true".
 
 These are the lines of Gremlin that you could run in the console to extend the schema manually. However we will let DSE Graph loader use our Groovy script to create the schema dynamically when it loads the data.
 
