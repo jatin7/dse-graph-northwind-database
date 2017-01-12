@@ -1,13 +1,99 @@
-# dse-graph-NorthWind-database - work in progress...
+# dse-graph-NorthWind-database
+
+Learn to use DataStax Enterprise (DSE) Graph - load the Northwind database into DSE Graph, look at the data in DSE Studio, then modify the schema and load additional data.
 
 #Pre-requisites
 
--Install or upgrade to DSE 5.0.5
--Download DSE Graph Loader
--Download DSE Studio (or install the dse-demos package)
+Ideally you should take a look at the Gremlin language and the DataStax free training material at academy.datastax.com. 
+In particular:
+-introduction to DataStax distributed database, analytics and search: https://academy.datastax.com/courses/
+-for some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
+
+
+##Install or upgrade to DSE 5.0.5
+You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance,
+- Install Java 8 and Python 2.7+
+- Set up and install DataStax Enterprise with Spark and Solr enabled - this demo is based upon DSE 5.0.3.x with Spark 1.6.1 and Scala 2.10, using the packaged install method:
+ - Ubuntu/Debian - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installDEBdse.html
+ - Red Hat/Fedora/CentOS/Oracle Linux - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installRHELdse.html
+- Note down the IP's of the node(s)
+
+To setup your environment, you'll also need the following resources:
+- Python 2.7
+- Java 8
+- For Red Hat, CentOS and Fedora, install EPEL (Extra Packages for Enterprise Linux).
+
+Your URL's will be: 
+- Opscenter => http://[DSE_NODE_IP]:8888/opscenter/index.html
+- Spark Master => http://[DSE_NODE_IP]:7080/
+- Solr admin page => http://[DSE_NODE_IP]:8983/solr/
+- Node.js ReST interface => e.g. http://[DSE_NODE_IP]:3000
+- Visual Dashboard => http://[DSE_NODE_IP]:8983/banana/#/dashboard
+- DSE Studio => http://[DSE_NODE_IP]:9091
+(where [DSE_NODE_IP] is the public IP address of your single node DSE installation)
+
+>If you want the Graphloader and DSE Studio to be installed by the system use the package install for dse-demos
+
+###Solr Documentation (Search):
+https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/srch/searchOverview.html
+
+###Spark Documentation (Analytics):
+https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/ana/analyticsTOC.html
+
+##Run DSE in Search Analytics mode
+
+If you havent yet started DSE on this node you can skip to the section "Clone the RTFAP2 repository"
+
+If you **have** already started the DSE service on this node, follow the instructions below to remove the default (Cassandra-only) database:
+
+1. Stop the service.
+<pre>
+$ sudo service dse stop
+Stopping DSE daemon : dse                                  [  OK  ]
+</pre>
+
+2. Enable Solr and Spark
+Change the flag from "0" to "1" for Solr and Spark in /etc/default/dse:
+<pre>
+$ sudo vi /etc/default/dse
+</pre>
+e.g.:
+<pre>
+# Start the node in DSE Search mode
+SOLR_ENABLED=1
+# Start the node in Spark mode
+SPARK_ENABLED=1
+</pre>
+
+3. Delete the default (Cassandra-only) datacentre databases:
+<pre>
+$ sudo rm -rf /var/lib/cassandra/data/*
+$ sudo rm -rf /var/lib/cassandra/saved_caches/*
+$ sudo rm -rf /var/lib/cassandra/commitlog/*
+$ sudo rm -rf /var/lib/cassandra/hints/*
+</pre>
+
+4. Remove the old system.log:
+<pre>
+$ sudo rm /var/log/cassandra/system.log 
+rm: remove regular file `/var/log/cassandra/system.log'? y
+</pre>
+
+5. Restart DSE
+<pre>
+$ sudo service dse start
+</pre>
+<br>
+
+##Clone the RTFAP2 repository
+
+Finally, clone this repo to a directory on the machine where you installed DSE:
+```
+$ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
+```
 
 ##Start DSE Studio
-Reference: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/QuickStartStudio.html?hl=studio
+Use this URL for links to the documentation and download for DSE Studio: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/QuickStartStudio.html?hl=studio
 
 You can unzip the Studio download into a location of your choice.
 For example:
@@ -20,7 +106,7 @@ nohup ./datastax-studio-1.0.2/bin/server.sh &
 You'll find Studio running on port 9091
 
 ##Install DSE Graph Loader
-Reference: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/graphloaderTOC.html?hl=graphloader
+Use this URL for links to the documentation and download for DSE Graphloader: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/graphloaderTOC.html?hl=graphloader
 
 You can unzip the Graphloader download into a location of your choice.
 For example:
@@ -36,11 +122,12 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 
 
 #Get Data
-Reference: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
+Kryo data import reference: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
-Download the Northwind database data file from https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
+Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
 
-#Create a mapping file
+
+#Create a DSE Graphloader mapping file
 
 Create northwind-mapping.groovy:
 ```
@@ -73,7 +160,12 @@ load(source.edges()).asEdges {
 ```
 #Load The Data
 
-Delete an old one if there is one:
+##Pre-flights
+
+>You'll need this if you're re-running this exercise
+
+Delete an old graph you created (if there is one):
+In the Gremlin console (```dse gremlin-console```) or in DSE Studio:
 ```
 gremlin> :remote config alias g testGRYO.g
 gremlin> schema.config().option('graph.schema_mode').set('Development')
@@ -84,7 +176,9 @@ gremlin> schema.clear()
 Load data - create graph called testGRYO - change -dryrun to false when ready to load:
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
-cd /home/dse/dse_dev/dse-graph-Northwind-loader
+
+$ cd /home/dse/dse_dev/dse-graph-Northwind-loader
+
 $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localhost -dryrun false
 ...
 2017-01-10 13:36:22 INFO  Reporter:92 - ADD Request for 0 vertices 4077 edges 0 properties 0 anonymous
@@ -92,7 +186,7 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 2017-01-10 13:36:22 INFO  Reporter:99 - 23940 total elements written
 ```
 
-#Create Notebook
+#Create a new notebook in DSE Studio for your graph
 
 Create a new notebook - call it Northwind, connect to the testGRYO graph database
 Test its all in there:
@@ -100,14 +194,17 @@ Test its all in there:
 g.V().count() = 3209
 ```
 sample queries on the data:
-http://sql2gremlin.com/
-e.g. g.V().hasLabel("category").valueMap("name", "description")
+You can find sample reference queries here: http://sql2gremlin.com/
 
-also refer to https://github.com/dkuppitz/sql2gremlin
+e.g. ```g.V().hasLabel("category").valueMap("name", "description")```
+
+Also refer to https://github.com/dkuppitz/sql2gremlin
 
 
 #Extend The Schema
-Our objective is to extend the Northwind schema and load some data into the database. We will add an entity describing a Facebook account and relate that to the customer entity.
+Our objective is to extend the Northwind schema thst we previously created and loaded data into - we'll define some new vertices and edges and load some data into the database to populate those new elements. 
+The data that we will add is an entity describing a Facebook account with an edge relationship with the customer entity, and a new edge between customer and product call "rated".
+We can also break the link between customer and country, replacing it with a new property on the custome, called "country". This will prevent the country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
 
 <p align="left">
   <img src="Northwind-extended.png"/>
