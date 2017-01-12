@@ -140,7 +140,7 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 ```
 
 
-#Get Data
+#Get The Northwind data
 There is some reference documentation on Kryo data imports here: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
 Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
@@ -184,7 +184,7 @@ load(source.edges()).asEdges {
     }
 }
 ```
-#Load The Data
+#Load The Northwind Data
 
 ##Pre-flights - re-run clean-up
 
