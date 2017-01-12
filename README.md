@@ -130,7 +130,7 @@ Download the Northwind database data file to your machine from: https://github.c
 
 #Create a DSE Graphloader mapping file
 
-Create northwind-mapping.groovy:
+Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!:
 ```
 //Configures the data loader to create the schema
 config create_schema: true, load_new: true
@@ -271,6 +271,7 @@ facebookMembers.csv  identityEdges_c2fb.csv  isFriendsWith.csv  isRelatedTo.csv 
 
 ##Create the Facebook identity and relationship data loader script
 We need a new Groovy script for the loader for this new data.
+You'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!
 
 ```
 $ pwd
@@ -356,6 +357,7 @@ $ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -a
 
 ##Create the Customer <-> Facebook edge data loader script
 We need a new Groovy script for the loader for this additional data.
+You'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!
 
 ```
 $ pwd
