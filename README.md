@@ -6,6 +6,7 @@ Learn to use DataStax Enterprise (DSE) Graph - load the Northwind database into 
 
 Ideally you should take a look at the Gremlin language and the DataStax free training material at academy.datastax.com. 
 In particular:
+
 -introduction to DataStax distributed database, analytics and search: https://academy.datastax.com/courses/
 -for some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
 
