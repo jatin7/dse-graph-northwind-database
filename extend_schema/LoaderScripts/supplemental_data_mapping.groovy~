@@ -3,7 +3,7 @@ config create_schema: true, load_new: false
 def inputpath = '/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
 
 fbMembersInput = File.csv(inputpath + 'facebookMembers.csv').delimiter('|')
-identitiesInput = File.csv(inputpath + 'identityEdges_c2fb.csv').delimiter('|')
+identitiesInput = File.csv(inputpath + 'identityEdges_cf2b.csv').delimiter('|')
 isFriendsWithInput = File.csv(inputpath + 'isFriendsWith.csv').delimiter('|')
 isRelatedToInput = File.csv(inputpath + 'isRelatedTo.csv').delimiter('|')
 ratedInput = File.csv(inputpath + 'rated.csv').delimiter('|')
