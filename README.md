@@ -266,7 +266,7 @@ There are already files generated that you can use:
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
 $ ls
-facebookMembers.csv  identityEdges_cf2b.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
+facebookMembers.csv  identityEdges_c2fb.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
 
 ##Create the Facebook identity and relationship data loader script
@@ -283,7 +283,7 @@ config create_schema: true, load_new: false
 def inputpath = '/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
 
 fbMembersInput = File.csv(inputpath + 'facebookMembers.csv').delimiter('|')
-identitiesInput = File.csv(inputpath + 'identityEdges_cf2b.csv').delimiter('|')
+identitiesInput = File.csv(inputpath + 'identityEdges_c2fb.csv').delimiter('|')
 isFriendsWithInput = File.csv(inputpath + 'isFriendsWith.csv').delimiter('|')
 isRelatedToInput = File.csv(inputpath + 'isRelatedTo.csv').delimiter('|')
 ratedInput = File.csv(inputpath + 'rated.csv').delimiter('|')
