@@ -7,6 +7,7 @@ Learn to use DataStax Enterprise (DSE) Graph:
 
 #Pre-requisites
 
+##Training
 Ideally you should first investigate the Gremlin language and the DataStax free training material at academy.datastax.com. 
 
 In particular:
@@ -105,6 +106,9 @@ $ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
 
 
 ##Start DSE Studio
+
+>Follow this section only if you didn't install the dse-demos package (you will already have Studio installed).
+
 Use this URL for links to the documentation and download for DSE Studio: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/QuickStartStudio.html?hl=studio
 
 You can unzip the Studio download into a location of your choice.
@@ -118,6 +122,9 @@ nohup ./datastax-studio-1.0.2/bin/server.sh &
 You'll find Studio running on port 9091
 
 ##Install DSE Graph Loader
+
+>Follow this section only if you didn't install the dse-demos package (you will already have Graphloader installed).
+
 Use this URL for links to the documentation and download for DSE Graphloader: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/graphloaderTOC.html?hl=graphloader
 
 You can unzip the Graphloader download into a location of your choice.
@@ -134,15 +141,22 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 
 
 #Get Data
-Kryo data import reference: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
+There is some reference documentation on Kryo data imports here: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
 Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
 
 
 #Create a DSE Graphloader mapping file
 
+Graphloader needs a groovy file to tell it how to load the data.
 Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!:
+
 ```
+$ pwd
+/home/dse/dse_dev/dse-graph-Northwind-loader
+
+$ vi northwind-map.groovy
+
 //Configures the data loader to create the schema
 config create_schema: true, load_new: true
 
@@ -172,9 +186,9 @@ load(source.edges()).asEdges {
 ```
 #Load The Data
 
-##Pre-flights
+##Pre-flights - re-run clean-up
 
->You'll need this if you're re-running this exercise
+>You'll need this to clean up if you're re-running this exercise
 
 Delete an old graph you created (if there is one):
 
@@ -188,7 +202,7 @@ gremlin> schema.clear()
 
 ##Load the Northwind data
 
-Create a graph called testGRYO
+Create a graph called testGRYO using the Graphloader.
 
 >You can change -dryrun to false when ready to load (no data is loaded when you set it to true):
 
@@ -198,7 +212,9 @@ LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 $ cd /home/dse/dse_dev/dse-graph-Northwind-loader
 
 $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localhost -dryrun false
-...
+```
+You should see this output:
+```
 2017-01-10 13:36:22 INFO  Reporter:92 - ADD Request for 0 vertices 4077 edges 0 properties 0 anonymous
 2017-01-10 13:36:22 INFO  Reporter:97 - Current total additions: 3209 vertices 6177 edges 14554 properties 0 anonymous
 2017-01-10 13:36:22 INFO  Reporter:99 - 23940 total elements written
@@ -246,7 +262,7 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
   <img src="Northwind-extended.png"/>
 </p>
 ##Schema changes to support the new data
-This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
+No actions here. This is for reference only - don't load these statements! - the groovy loader will do it with "create_schema: true".
 
 These are the lines of Gremlin that you could run in the console to extend the schema manually. However we will let DSE Graph loader use our Groovy script to create the schema dynamically when it loads the data.
 
@@ -271,7 +287,7 @@ schema.vertexLabel('facebookMember').index('byName').materialized().by('name').i
 ##Check (or re-create) the csv files
 These are a set of utility scripts to generate random data created by one of the DataStax Graph experts, Alice Lottini. 
 
-There are already files generated that you can use:
+You don't need to do anything here. There are already files generated that you can use now:
 ```
 $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
@@ -280,7 +296,9 @@ facebookMembers.csv  identityEdges_c2fb.csv  isFriendsWith.csv  isRelatedTo.csv 
 ```
 
 ##Create the Facebook identity and relationship data loader script
-We need a new Groovy script for the loader for this new data.
+Now we need to create a new Groovy script for the loader for the new data.
+We'll load it in two parts. The first part is mostly the data for the new FacebookMember vertex, FB reflexive edges and the rated edge.
+
 You'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!
 
 ```
@@ -354,8 +372,9 @@ $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
 
 $ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -address localhost -dryrun false
-
-
+```
+You should see this output:
+```
 2017-01-10 14:15:09 INFO  Reporter:92 - ADD Request for 152 vertices 121 edges 85 properties 0 anonymous
 2017-01-10 14:15:09 INFO  Reporter:97 - Current total additions: 237 vertices 121 edges 85 properties 0 anonymous
 2017-01-10 14:15:09 INFO  Reporter:99 - 443 total elements written
@@ -366,7 +385,7 @@ $ $LOADER_HOME/graphloader ./supplemental_data_mapping.groovy -graph testGRYO -a
 ```
 
 ##Create the Customer <-> Facebook edge data loader script
-We need a new Groovy script for the loader for this additional data.
+We now need another new Groovy script for the loader for the second part of the new data.
 You'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!
 
 ```
@@ -406,7 +425,9 @@ $ pwd
 /home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
 
 $ $LOADER_HOME/graphloader ./supplemental_fb_edges_mapping.groovy -graph testGRYO -address localhost -dryrun false
-
+```
+You should see this output:
+```
 2017-01-10 14:25:43 INFO  Reporter:99 - 170 total elements written
 2017-01-10 14:25:43 INFO  DataLoaderImpl:347 - Looking for relations in the following loads [identityEdges_c2fb]
 2017-01-10 14:25:43 INFO  DataLoaderImpl:193 - Initializing tasks with [1] read threads and [1] loader threads
@@ -417,6 +438,7 @@ $ $LOADER_HOME/graphloader ./supplemental_fb_edges_mapping.groovy -graph testGRY
 ```
 
 #Run some queries in Studio:
+Now we have our data we can view it in Studio.
 
 (if you need it)
 ```
