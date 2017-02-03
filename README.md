@@ -123,7 +123,7 @@ For example:
 tar -xzvf datastax-studio-1.0.2.tar.gz
 sudo mv datastax-studio-1.0.2 /opt
 cd /opt/datastax-studio-1.0.2/bin
-nohup ./datastax-studio-1.0.2/bin/server.sh &
+nohup ./server.sh &
 ```
 You'll find Studio running on port 9091
 
