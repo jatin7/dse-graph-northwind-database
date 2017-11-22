@@ -102,7 +102,7 @@ $ sudo service dse start
 </pre>
 <br>
 
-##Clone the dse-graph-NorthWind-database repository
+## Clone the dse-graph-NorthWind-database repository
 
 Finally, clone this repo to a directory on the machine where you installed DSE:
 ```
@@ -110,7 +110,7 @@ $ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
 ```
 
 
-##Start DSE Studio
+## Start DSE Studio
 
 >Follow this section only if you didn't install the dse-demos package (you will already have Studio installed).
 
@@ -126,7 +126,7 @@ nohup ./server.sh &
 ```
 You'll find Studio running on port 9091
 
-##Install DSE Graph Loader
+## Install DSE Graph Loader
 
 >Follow this section only if you didn't install the dse-demos package (you will already have Graphloader installed).
 
