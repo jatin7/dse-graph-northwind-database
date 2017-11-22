@@ -11,9 +11,9 @@ Look at your data in a different way.
   <img src="Northwind-graph.png"/>
 </p>
 
-#Pre-requisites
+# Pre-requisites
 
-##Training
+## Training
 Ideally you should first investigate the Gremlin language and the DataStax free training material at academy.datastax.com. 
 
 In particular:
@@ -21,7 +21,7 @@ In particular:
 - For some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
 
 
-##Install or upgrade to DSE 5.0.5
+## Install or upgrade to DSE 5.0.5
 You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance,
 
 For the purpose of this exercise let's assume you're installing on a single node.
@@ -47,13 +47,13 @@ Your URL's will be:
 
 >If you want the Graphloader and DSE Studio to be installed by the system use the package install for dse-demos
 
-###Solr Documentation (Search):
+### Solr Documentation (Search):
 https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/srch/searchOverview.html
 
-###Spark Documentation (Analytics):
+### Spark Documentation (Analytics):
 https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/ana/analyticsTOC.html
 
-##Run DSE in Search Analytics mode
+## Run DSE in Search Analytics mode
 
 If you havent yet started DSE on this node you can skip to the section "Clone the dse-graph-NorthWind-database repository"
 
@@ -146,13 +146,13 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 ```
 
 
-#Get The Northwind data
+# Get The Northwind data
 There is some reference documentation on Kryo data imports here: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
 Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
 
 
-#Create a DSE Graphloader mapping file
+# Create a DSE Graphloader mapping file
 
 Graphloader needs a groovy file to tell it how to load the data.
 Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!:
@@ -190,9 +190,9 @@ load(source.edges()).asEdges {
     }
 }
 ```
-#Load The Northwind Data
+# Load The Northwind Data
 
-##Pre-flights - re-run clean-up
+## Pre-flights - re-run clean-up
 
 >You'll need this to clean up if you're re-running this exercise
 
@@ -206,7 +206,7 @@ gremlin> schema.clear()
 ```
 
 
-##Load the Northwind data
+## Load the Northwind data
 
 Create a graph called testGRYO using the Graphloader.
 
@@ -226,7 +226,7 @@ You should see this output:
 2017-01-10 13:36:22 INFO  Reporter:99 - 23940 total elements written
 ```
 
-#Create a new notebook in DSE Studio for your graph
+# Create a new notebook in DSE Studio for your graph
 
 Create a new notebook - call it Northwind, connect to the testGRYO graph database
 
@@ -276,7 +276,7 @@ gremlin> g.V().hasLabel("category").values("name")
 Also refer to https://github.com/dkuppitz/sql2gremlin
 
 
-#Extend The Schema
+# Extend The Schema
 - Our next objective is to extend the Northwind schema that we previously created and loaded data into. We'll define some new vertices and edges, and load some data into the database to populate those new elements. 
 - The data that we will add is an entity describing a FacebookMember account with an edge relationship shared with the Customer entity, and a new edge between Customer and Product call "rated".
 - We can also break the link between Customer and Country, replacing it with a new property on the Customer vertex called "country". This will prevent the Country vertex later becoming a potential "super vertex" (sometimes called the Justin Bieber problem). This happens where there are a great many edges connected to one vertex, and is not necessarily the most efficient way to store graph data.
@@ -284,7 +284,8 @@ Also refer to https://github.com/dkuppitz/sql2gremlin
 <p align="left">
   <img src="Northwind-extended.png"/>
 </p>
-##Schema changes to support the new data
+
+## Schema changes to support the new data
 No actions here. This is for reference only - don't load these statements!!! - the groovy loader will do it with "create_schema: true".
 
 These are the lines of Gremlin that you could run in the console to extend the schema manually. However we will let DSE Graph loader use our Groovy script to create the schema dynamically when it loads the data.
@@ -307,7 +308,7 @@ schema.edgeLabel("rated").single().properties("rating").connection("customer", "
 schema.vertexLabel('facebookMember').index('byName').materialized().by('name').ifNotExists().add()
 ```
 
-##Check (or re-create) the csv files
+## Check (or re-create) the csv files
 These are a set of utility scripts to generate random data created by one of the DataStax Graph experts, Alice Lottini. 
 
 You don't need to do anything here. There are already files generated that you can use now:
@@ -318,7 +319,7 @@ $ ls
 facebookMembers.csv  identityEdges_c2fb.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
 
-##Create the Facebook identity and relationship data loader script
+## Create the Facebook identity and relationship data loader script
 Now we need to create a new Groovy script for the loader for the new data.
 We'll load it in two parts. The first part is mostly the data for the new FacebookMember vertex, FB reflexive edges and the rated edge.
 
@@ -385,7 +386,7 @@ load(ratedInput).asEdges {
 }
 ```
 
-##Load the Facebook identity and relationship data
+## Load the Facebook identity and relationship data
 Run the loader using the Groovy script we just created for the new data.
 
 ```
@@ -407,7 +408,7 @@ You should see this output:
 2017-01-10 14:15:10 INFO  Reporter:99 - 912 total elements written
 ```
 
-##Create the Customer <-> Facebook edge data loader script
+## Create the Customer <-> Facebook edge data loader script
 We now need another new Groovy script for the loader for the second part of the new data.
 You'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!
 
@@ -438,7 +439,7 @@ load(isMemberOfInput).asEdges {
 }
 ```
 
-##Load the Customer <-> Facebook edge data
+## Load the Customer <-> Facebook edge data
 Run the loader using the Groovy script we just created for the additional data.
 
 ```
@@ -460,7 +461,7 @@ You should see this output:
 2017-01-10 14:25:44 INFO  Reporter:99 - 255 total elements written
 ```
 
-#Run some queries in Studio:
+# Run some queries in Studio:
 Now we have our data we can view it in Studio.
 
 (if you need it)
