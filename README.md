@@ -154,7 +154,7 @@ If you didn't clone the repo you'll need to download the Northwind database data
 # Create a DSE Graphloader mapping file
 
 Graphloader needs a groovy file to tell it how to load the data.
-Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash!:
+Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect your environment. Do not forget the trailing slash on the inputpath!:
 
 ```
 $ pwd
