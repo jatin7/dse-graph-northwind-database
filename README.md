@@ -20,8 +20,8 @@ In particular:
 - For some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
 
 
-## Install or upgrade to DSE 5.0.5
-You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance,
+## Install or upgrade to DSE 5.1.4
+You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance. I'm using DSE 5.1.4
 
 For the purpose of this exercise let's assume you're installing on a single node.
 - Install Java 8 and Python 2.7+
@@ -148,7 +148,7 @@ $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localh
 # Get The Northwind data
 There is some reference documentation on Kryo data imports here: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/dgl/dglGRYO.html?hl=kryo
 
-Download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
+If you didn't clone the repo you'll need to download the Northwind database data file to your machine from: https://github.com/dkuppitz/sql2gremlin/blob/master/assets/northwind.kryo
 
 
 # Create a DSE Graphloader mapping file
