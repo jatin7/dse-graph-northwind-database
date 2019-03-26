@@ -64,7 +64,7 @@ rm: remove regular file `/var/log/cassandra/system.log'? y
 
 Finally, clone this repo to a directory on the machine where you installed DSE:
 ```
-$ git clone https://github.com/simonambridge/dse-graph-northwind-loader
+$ git clone https://github.com/jatin7/dse-graph-northwind-loader
 ```
 
 
