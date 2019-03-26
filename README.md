@@ -20,20 +20,7 @@ In particular:
 - For some wonderful Graph training from Tim Berglund: https://academy.datastax.com/resources/ds330-datastax-enterprise-graph
 
 
-## Install or upgrade to DSE 5.1.4
-You may as well get the latest DSE release - both DSE and Graph are improving all the time with new features and improved performance. I'm using DSE 5.1.4
-
-For the purpose of this exercise let's assume you're installing on a single node.
-- Install Java 8 and Python 2.7+
-- Set up and install DataStax Enterprise with Spark and Solr enabled - this demo is based upon DSE 5.0.5 with Spark 1.6.2 and Scala 2.10, using the packaged install method:
- - Ubuntu/Debian - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installDEBdse.html
- - Red Hat/Fedora/CentOS/Oracle Linux - https://docs.datastax.com/en/datastax_enterprise/5.0/datastax_enterprise/install/installRHELdse.html
-- Note down the IP's of the node you're installing on
-
-To setup your environment, you'll also need the following resources:
-- Python 2.7
-- Java 8
-- For Red Hat, CentOS and Fedora, install EPEL (Extra Packages for Enterprise Linux).
+## DSE 5.1.4
 
 Your URL's will be: 
 - Opscenter => http://[DSE_NODE_IP]:8888/opscenter/index.html
@@ -58,31 +45,8 @@ If you havent yet started DSE on this node you can skip to the section "Clone th
 
 If you **have** already started the DSE service on this node, follow the instructions below to remove the default (Cassandra-only) database and start again in Search/Analytics/Graph mode:
 
-1. Stop the service.
-<pre>
-$ sudo service dse stop
-Stopping DSE daemon : dse                                  [  OK  ]
-</pre>
 
-2. Enable Solr, Spark and Graph
-
-> You'll need about 8GB in your machine or VM to run the full suite.
-
-Change the flag from "0" to "1" for Solr, Spark and Graph in /etc/default/dse:
-<pre>
-$ sudo vi /etc/default/dse
-</pre>
-e.g.:
-<pre>
-# Enable the DSE Graph service on this node
-GRAPH_ENABLED=1
-# Start the node in DSE Search mode
-SOLR_ENABLED=1
-# Start the node in Spark mode
-SPARK_ENABLED=1
-</pre>
-
-3. Delete the default (Cassandra-only) datacentre databases:
+1. Delete the default (Cassandra-only) datacentre databases:
 <pre>
 $ sudo rm -rf /var/lib/cassandra/data/*
 $ sudo rm -rf /var/lib/cassandra/saved_caches/*
@@ -90,23 +54,17 @@ $ sudo rm -rf /var/lib/cassandra/commitlog/*
 $ sudo rm -rf /var/lib/cassandra/hints/*
 </pre>
 
-4. Remove the old system.log:
+2. Remove the old system.log:
 <pre>
 $ sudo rm /var/log/cassandra/system.log 
 rm: remove regular file `/var/log/cassandra/system.log'? y
 </pre>
 
-5. Restart DSE
-<pre>
-$ sudo service dse start
-</pre>
-<br>
-
 ## Clone the dse-graph-NorthWind-database repository
 
 Finally, clone this repo to a directory on the machine where you installed DSE:
 ```
-$ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
+$ git clone https://github.com/simonambridge/dse-graph-northwind-loader
 ```
 
 
@@ -116,15 +74,6 @@ $ git clone https://github.com/simonambridge/dse-graph-NorthWind-database
 
 Use this URL for links to the documentation and download for DSE Studio: http://docs.datastax.com/en/latest-dse/datastax_enterprise/graph/QuickStartStudio.html?hl=studio
 
-You can unzip the Studio download into a location of your choice.
-For example:
-```
-tar -xzvf datastax-studio-1.0.2.tar.gz
-sudo mv datastax-studio-1.0.2 /opt
-cd /opt/datastax-studio-1.0.2/bin
-nohup ./server.sh &
-```
-You'll find Studio running on port 9091
 
 ## Install DSE Graph Loader
 
@@ -158,14 +107,14 @@ Create northwind-mapping.groovy - you'll need to edit the inputpath to reflect y
 
 ```
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader
+/home/dse/dse_dev/dse-graph-northwind-loader
 
 $ vi northwind-map.groovy
 
 //Configures the data loader to create the schema
 config create_schema: true, load_new: true
 
-def inputpath = '/home/dse/dse_dev/dse-graph-Northwind-loader/';
+def inputpath = '/home/dse/dse_dev/dse-graph-northwind-loader/';
 def inputfile = inputpath + 'northwind.kryo';
 
 //Defines the data input source (a file which is specified via command line arguments)
@@ -214,7 +163,7 @@ Create a graph called testGRYO using the Graphloader.
 ```
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
-$ cd /home/dse/dse_dev/dse-graph-Northwind-loader
+$ cd /home/dse/dse_dev/dse-graph-northwind-loader
 
 $LOADER_HOME/graphloader ./northwind-map.groovy  -graph testGRYO -address localhost -dryrun false
 ```
@@ -313,7 +262,7 @@ These are a set of utility scripts to generate random data created by one of the
 You don't need to do anything here. There are already files generated that you can use now:
 ```
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
+/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData
 $ ls
 facebookMembers.csv  identityEdges_c2fb.csv  isFriendsWith.csv  isRelatedTo.csv  rated.csv
 ```
@@ -326,13 +275,13 @@ You'll need to edit the inputpath to reflect your environment. Do not forget the
 
 ```
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
+/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/LoaderScripts
 
 $ vi supplemental_fb_data_mapping.groovy
 
 config create_schema: true, load_new: false
 
-def inputpath = '/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
+def inputpath = '/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
 
 fbMembersInput = File.csv(inputpath + 'facebookMembers.csv').delimiter('|')
 identitiesInput = File.csv(inputpath + 'identityEdges_c2fb.csv').delimiter('|')
@@ -392,7 +341,7 @@ Run the loader using the Groovy script we just created for the new data.
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
+/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/LoaderScripts
 
 $ $LOADER_HOME/graphloader ./supplemental_fb_data_mapping.groovy -graph testGRYO -address localhost -dryrun false
 ```
@@ -413,13 +362,13 @@ You'll need to edit the inputpath to reflect your environment. Do not forget the
 
 ```
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
+/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/LoaderScripts
 
 $ vi supplemental_fb_edges_mapping.groovy
 
 config create_schema: true, load_new: false
 
-def inputpath = '/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
+def inputpath = '/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/GeneratedDataAndScripts/GeneratedData/';
 
 def identities = inputpath + 'identityEdges_c2fb.csv';
 
@@ -445,7 +394,7 @@ Run the loader using the Groovy script we just created for the additional data.
 LOADER_HOME=/opt/dse-graph-loader-5.0.5 export LOADER_HOME
 
 $ pwd
-/home/dse/dse_dev/dse-graph-Northwind-loader/extend_schema/LoaderScripts
+/home/dse/dse_dev/dse-graph-northwind-loader/extend_schema/LoaderScripts
 
 $ $LOADER_HOME/graphloader ./supplemental_fb_edges_mapping.groovy -graph testGRYO -address localhost -dryrun false
 ```
